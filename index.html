@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adova Inspire - Agência Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== VARIÁVEIS E RESET ===== */
+        :root {
+            --primary: #4f46e5; /* Azul moderno */
+            --primary-hover: #4338ca;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --text-gray: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; }
+        ul { list-style: none; }
+        
+        /* ===== BOTÕES ===== */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover { background-color: var(--primary-hover); }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--dark);
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* ===== CABEÇALHO (NAVBAR) ===== */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e8f0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -1px;
+        }
+
+        .logo span { color: var(--primary); }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        /* ===== SEÇÃO HERO ===== */
+        .hero {
+            padding-top: 160px;
+            padding-bottom: 100px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: var(--dark);
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        /* ===== SERVIÇOS ===== */
+        .services {
+            padding: 100px 0;
+            background-color: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .section-header p {
+            color: var(--text-gray);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            padding: 40px;
+            border-radius: 16px;
+            background-color: var(--light);
+            border: 1px solid #f1f5f9;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border-color: #e2e8f0;
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 24px;
+            font-weight: bold;
+        }
+
+        .service-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: var(--text-gray);
+            font-size: 15px;
+        }
+
+        /* ===== SOBRE ===== */
+        .about {
+            padding: 100px 0;
+            background-color: var(--dark);
+            color: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .about p {
+            color: #94a3b8;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(45deg, #1e293b, #334155);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        /* ===== RODAPÉ ===== */
+        footer {
+            padding: 40px 0;
+            background-color: white;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* Oculta menu no mobile para simplificar */
+            .hero h1 { font-size: 40px; }
+            .about-content { grid-template-columns: 1fr; }
+            .hero-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="container nav-content">
+            <div class="logo">Adova<span>.</span></div>
+            <ul class="nav-links">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#services">Serviços</a></li>
+                <li><a href="#about">Sobre</a></li>
+            </ul>
+            <a href="#contact" class="btn btn-primary">Fale Conosco</a>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Criamos Experiências<br>Digitais Incríveis</h1>
+            <p>Transformamos ideias complexas em soluções digitais simples e elegantes. Somos a agência criativa para marcas inovadoras.</p>
+            <div class="hero-buttons">
+                <a href="#services" class="btn btn-primary">Nossos Serviços</a>
+                <a href="#about" class="btn btn-outline">Descubra Mais</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>O que nós fazemos</h2>
+                <p>Soluções completas para elevar o nível do seu negócio na internet.</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon-box">W</div>
+                    <h3>Web Development</h3>
+                    <p>Criamos sites rápidos, responsivos e otimizados para SEO usando as tecnologias mais modernas do mercado.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box">UI</div>
+                    <h3>UI/UX Design</h3>
+                    <p>Interfaces intuitivas e belas que retêm a atenção do usuário e melhoram a conversão do seu produto.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box">M</div>
+                    <h3>Marketing Digital</h3>
+                    <p>Estratégias baseadas em dados para impulsionar sua marca, alcançar novos públicos e gerar vendas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container about-content">
+            <div class="about-text">
+                <h2>Pensamos fora da caixa para gerar resultados.</h2>
+                <p>Nossa equipe de especialistas combina criatividade e tecnologia para entregar projetos que não apenas parecem ótimos, mas que também cumprem seus objetivos de negócios.</p>
+                <a href="#" class="btn btn-primary">Conheça nossa equipe</a>
+            </div>
+            <div class="image-placeholder">
+                [ Espaço para Imagem da Empresa ]
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Adova Inspire. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Efeito de sombra no cabeçalho ao rolar a página
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Rolagem suave para os links do menu
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
