@@ -800,24 +800,25 @@
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Nome</label>
-          <input type="text" class="form-input" placeholder="Seu nome"/>
+          <input type="text" id="contact-nome" class="form-input" placeholder="Seu nome"/>
         </div>
         <div class="form-group">
           <label class="form-label">Email</label>
-          <input type="email" class="form-input" placeholder="seu@email.com"/>
+          <input type="email" id="contact-email" class="form-input" placeholder="seu@email.com"/>
         </div>
       </div>
       <div class="form-group">
         <label class="form-label">Assunto</label>
-        <input type="text" class="form-input" placeholder="Proposta, parceria, projeto..."/>
+       <input type="text" id="contact-assunto" class="form-input" placeholder="Proposta, parceria, projeto..."/>
       </div>
       <div class="form-group">
         <label class="form-label">Mensagem</label>
-        <textarea class="form-textarea" placeholder="Conte um pouco sobre o que você precisa..."></textarea>
+        <textarea id="contact-mensagem" class="form-textarea" placeholder="Conte um pouco sobre o que você precisa..."></textarea>
       </div>
-      <button class="btn-primary" style="align-self:flex-start">
-        <i class="fa-solid fa-paper-plane"></i> Enviar Mensagem
-      </button>
+      <button class="btn-primary" style="align-self:flex-start" onclick="enviarMensagem()">
+      <i class="fa-solid fa-paper-plane"></i> Enviar Mensagem
+    </button>
+    <p id="form-feedback" style="display:none; margin-top:12px; font-size:0.9rem;"></p>
     </div>
   </div>
 </section>
@@ -867,6 +868,30 @@
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  function enviarMensagem() {
+    const nome     = document.getElementById('contact-nome').value.trim();
+    const email    = document.getElementById('contact-email').value.trim();
+    const assunto  = document.getElementById('contact-assunto').value.trim();
+    const mensagem = document.getElementById('contact-mensagem').value.trim();
+    const feedback = document.getElementById('form-feedback');
+  
+    if (!nome || !email || !assunto || !mensagem) {
+      feedback.style.display = 'block';
+      feedback.style.color = '#ff4db8';
+      feedback.textContent = '⚠️ Por favor, preencha todos os campos antes de enviar.';
+      return;
+    }
+  
+    const corpo = `Olá, Stefany!\n\nVocê recebeu uma nova mensagem pelo seu portfólio:\n\n👤 Nome: ${nome}\n📧 Email: ${email}\n\n💬 Mensagem:\n${mensagem}`;
+    const mailtoLink = `mailto:lealstefany508@gmail.com?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
+  
+    window.location.href = mailtoLink;
+  
+    feedback.style.display = 'block';
+    feedback.style.color = '#80ffcc';
+    feedback.textContent = '✅ Seu cliente de e-mail foi aberto com a mensagem pronta para envio!';
+  }
 </script>
 </body>
 </html>
