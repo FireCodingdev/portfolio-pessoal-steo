@@ -1,5 +1,17 @@
 import { sql } from "@vercel/postgres";
+import { unstable_noStore as noStore } from "next/cache";
 import { defaultContentMap, ContentSection } from "./defaultContent";
+
+/**
+ * IMPORTANTE: os dados aqui vêm direto do Postgres (não via `fetch`), então
+ * o `export const dynamic = "force-dynamic"` das rotas/páginas sozinho não
+ * garante que o Next/Vercel nunca vá cachear o resultado dessas funções
+ * (Full Route Cache / Data Cache podem ainda reter uma versão antiga em
+ * produção). Chamando `noStore()` no início de cada função de LEITURA,
+ * dizemos explicitamente ao Next para nunca cachear essa chamada,
+ * independente de onde ela for usada. Isso resolve o sintoma de "salva mas
+ * ao recarregar volta pro conteúdo antigo".
+ */
 
 let schemaReady = false;
 
@@ -54,6 +66,7 @@ export async function ensureSchema() {
 // ---------- Conteúdo do site ----------
 
 export async function getContent<T = any>(section: ContentSection): Promise<T> {
+  noStore();
   await ensureSchema();
   const { rows } = await sql`SELECT data FROM site_content WHERE section = ${section} LIMIT 1;`;
   if (rows.length === 0) {
@@ -63,6 +76,7 @@ export async function getContent<T = any>(section: ContentSection): Promise<T> {
 }
 
 export async function getAllContent() {
+  noStore();
   await ensureSchema();
   const { rows } = await sql`SELECT section, data FROM site_content;`;
   const map: Record<string, any> = { ...defaultContentMap };
@@ -100,6 +114,7 @@ export async function createLead(input: {
 }
 
 export async function listLeads(limit = 200) {
+  noStore();
   await ensureSchema();
   const { rows } = await sql`
     SELECT id, nome, email, assunto, mensagem, status, created_at
@@ -121,12 +136,14 @@ export async function deleteLead(id: number) {
 }
 
 export async function countLeads() {
+  noStore();
   await ensureSchema();
   const { rows } = await sql`SELECT COUNT(*)::int AS total FROM leads;`;
   return rows[0].total as number;
 }
 
 export async function countLeadsSince(days: number) {
+  noStore();
   await ensureSchema();
   const { rows } = await sql`
     SELECT COUNT(*)::int AS total FROM leads
@@ -143,12 +160,14 @@ export async function logEvent(type: string, meta: Record<string, any> = {}) {
 }
 
 export async function countEvents(type: string) {
+  noStore();
   await ensureSchema();
   const { rows } = await sql`SELECT COUNT(*)::int AS total FROM events WHERE type = ${type};`;
   return rows[0].total as number;
 }
 
 export async function countEventsSince(type: string, days: number) {
+  noStore();
   await ensureSchema();
   const { rows } = await sql`
     SELECT COUNT(*)::int AS total FROM events
@@ -159,6 +178,7 @@ export async function countEventsSince(type: string, days: number) {
 
 /** Retorna contagem de eventos por dia (últimos N dias) para gráficos simples. */
 export async function eventsPerDay(type: string, days = 14) {
+  noStore();
   await ensureSchema();
   const { rows } = await sql`
     SELECT to_char(date_trunc('day', created_at), 'YYYY-MM-DD') AS dia, COUNT(*)::int AS total
@@ -171,6 +191,7 @@ export async function eventsPerDay(type: string, days = 14) {
 }
 
 export async function leadsPerDay(days = 14) {
+  noStore();
   await ensureSchema();
   const { rows } = await sql`
     SELECT to_char(date_trunc('day', created_at), 'YYYY-MM-DD') AS dia, COUNT(*)::int AS total
