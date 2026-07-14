@@ -48,7 +48,10 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   try {
     const leads = await listLeads();
-    return NextResponse.json({ leads });
+    return NextResponse.json(
+      { leads },
+      { headers: { "Cache-Control": "no-store, no-cache, must-revalidate" } }
+    );
   } catch (err: any) {
     return NextResponse.json({ erro: err.message || "Erro ao buscar leads." }, { status: 500 });
   }

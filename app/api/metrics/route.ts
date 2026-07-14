@@ -40,13 +40,16 @@ export async function GET() {
       listLeads(5),
     ]);
 
-    return NextResponse.json({
-      leads: { total: totalLeads, ultimos7dias: leads7dias, ultimos30dias: leads30dias },
-      downloads: { total: totalDownloads, ultimos7dias: downloads7dias, ultimos30dias: downloads30dias },
-      visualizacoes: { total: totalViews, ultimos30dias: views30dias },
-      grafico: { leadsPorDia, downloadsPorDia },
-      ultimosLeads,
-    });
+    return NextResponse.json(
+      {
+        leads: { total: totalLeads, ultimos7dias: leads7dias, ultimos30dias: leads30dias },
+        downloads: { total: totalDownloads, ultimos7dias: downloads7dias, ultimos30dias: downloads30dias },
+        visualizacoes: { total: totalViews, ultimos30dias: views30dias },
+        grafico: { leadsPorDia, downloadsPorDia },
+        ultimosLeads,
+      },
+      { headers: { "Cache-Control": "no-store, no-cache, must-revalidate" } }
+    );
   } catch (err: any) {
     return NextResponse.json({ erro: err.message || "Erro ao buscar métricas." }, { status: 500 });
   }

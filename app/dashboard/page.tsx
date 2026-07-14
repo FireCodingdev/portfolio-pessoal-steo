@@ -49,7 +49,7 @@ export default function DashboardOverview() {
   const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/metrics")
+    fetch("/api/metrics", { cache: "no-store" })
       .then(async (r) => {
         const data = await r.json();
         if (!r.ok) throw new Error(data.erro || "Erro ao carregar métricas.");

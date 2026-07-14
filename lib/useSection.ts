@@ -11,7 +11,7 @@ export function useSection<T>(section: ContentSection, fallback: T) {
 
   useEffect(() => {
     let ativo = true;
-    fetch("/api/content")
+    fetch("/api/content", { cache: "no-store" })
       .then((r) => r.json())
       .then((all) => {
         if (ativo && all[section]) setData(all[section]);

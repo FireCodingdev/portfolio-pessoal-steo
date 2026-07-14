@@ -8,7 +8,9 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const content = await getAllContent();
-    return NextResponse.json(content);
+    return NextResponse.json(content, {
+      headers: { "Cache-Control": "no-store, no-cache, must-revalidate" },
+    });
   } catch (err: any) {
     return NextResponse.json({ erro: err.message || "Erro ao buscar conteúdo." }, { status: 500 });
   }

@@ -27,7 +27,7 @@ export default function LeadsPage() {
 
   function carregar() {
     setCarregando(true);
-    fetch("/api/leads")
+    fetch("/api/leads", { cache: "no-store" })
       .then(async (r) => {
         const data = await r.json();
         if (!r.ok) throw new Error(data.erro || "Erro ao carregar mensagens.");
